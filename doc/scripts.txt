@@ -1,0 +1,62 @@
+-- Database: paygateway
+
+-- DROP DATABASE IF EXISTS paygateway;
+
+CREATE DATABASE paygateway
+    WITH 
+    OWNER = admin
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.utf8'
+    LC_CTYPE = 'en_US.utf8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+--------------------------------------------------------
+-- Table: public.merchants
+
+-- DROP TABLE IF EXISTS public.merchants;
+
+CREATE TABLE IF NOT EXISTS public.merchants
+(
+    id uuid NOT NULL,
+    username text COLLATE pg_catalog."default",
+    password text COLLATE pg_catalog."default",
+    CONSTRAINT merchants_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.merchants
+    OWNER to postgres;
+	
+	
+-- Table: public.transactions
+
+-- DROP TABLE IF EXISTS public.transactions;
+
+CREATE TABLE IF NOT EXISTS public.transactions
+(
+    id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    status text COLLATE pg_catalog."default",
+    paymentmethod text COLLATE pg_catalog."default",
+    cardnumber text COLLATE pg_catalog."default",
+    expiremonthday text COLLATE pg_catalog."default",
+    cvv integer,
+    amount numeric,
+    currency text COLLATE pg_catalog."default",
+    spent numeric,
+    providertransactionid text COLLATE pg_catalog."default",
+    CONSTRAINT transactions_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.transactions
+    OWNER to postgres;
+	
+------------------------------------------------------------------	
+	
+	
+INSERT INTO public.merchants(
+	id, username, password)
+	VALUES (uuid_generate_v4(), 'Mateusz', '12345678');

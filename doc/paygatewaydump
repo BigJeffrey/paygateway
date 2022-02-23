@@ -1,0 +1,121 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.1 (Debian 14.1-1.pgdg110+1)
+-- Dumped by pg_dump version 14.1
+
+-- Started on 2022-02-12 19:24:15
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2 (class 3079 OID 24586)
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- TOC entry 3332 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 211 (class 1259 OID 32805)
+-- Name: merchants; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.merchants (
+    id uuid NOT NULL,
+    username text,
+    password text
+);
+
+
+ALTER TABLE public.merchants OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 24580)
+-- Name: transactions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.transactions (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    status text,
+    paymentmethod text,
+    cardnumber text,
+    expiremonthday text,
+    cvv integer,
+    amount numeric,
+    currency text,
+    spent numeric,
+    providertransactionid text
+);
+
+
+ALTER TABLE public.transactions OWNER TO postgres;
+
+--
+-- TOC entry 3326 (class 0 OID 32805)
+-- Dependencies: 211
+-- Data for Name: merchants; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.merchants (id, username, password) FROM stdin;
+278f9040-3611-4eeb-b039-6858fb4e4349	Mateusz	12345678
+\.
+
+
+--
+-- TOC entry 3325 (class 0 OID 24580)
+-- Dependencies: 210
+-- Data for Name: transactions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.transactions (id, status, paymentmethod, cardnumber, expiremonthday, cvv, amount, currency, spent, providertransactionid) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3185 (class 2606 OID 32811)
+-- Name: merchants merchants_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.merchants
+    ADD CONSTRAINT merchants_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3183 (class 2606 OID 24604)
+-- Name: transactions transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transactions
+    ADD CONSTRAINT transactions_pkey PRIMARY KEY (id);
+
+
+-- Completed on 2022-02-12 19:25:11
+
+--
+-- PostgreSQL database dump complete
+--
+
