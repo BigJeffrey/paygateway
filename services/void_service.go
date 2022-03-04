@@ -19,12 +19,5 @@ func (a *Services) Void(transaction *models.Transaction) (int, error) {
 		return http.StatusInternalServerError, errors.New("something went wrong")
 	}
 
-	transaction.Status = "void"
-
-	err = a.Dao.UpdateTransaction(transaction)
-	if err != nil {
-		return http.StatusInternalServerError, errors.New("something went wrong")
-	}
-
 	return http.StatusOK, nil
 }

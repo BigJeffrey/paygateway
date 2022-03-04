@@ -26,10 +26,5 @@ func (a *Services) Refund(transaction *models.Transaction, amount float64) (int,
 		return http.StatusForbidden, errors.New("can't refund more than you spent")
 	}
 
-	err = a.Dao.UpdateTransaction(transaction)
-	if err != nil {
-		return http.StatusInternalServerError, errors.New("something went wrong")
-	}
-
 	return http.StatusOK, nil
 }

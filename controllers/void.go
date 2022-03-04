@@ -36,6 +36,13 @@ func (c *Controller) Void(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	transaction.Status = "void"
+
+	err = c.Dao.UpdateTransaction(transaction)
+	if err != nil {
+		ApiError(w, "something went wrong", http.StatusInternalServerError)
+	}
+
 	ReturnJSON(w, models.NewVoidResponse("Success", transaction.Amount, transaction.Currency), http.StatusOK)
 }
 
