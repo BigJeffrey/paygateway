@@ -18,7 +18,10 @@ func (m *PostgreSql) GetCards() ([]models.CreditCardData, error) {
 	}
 
 	for rows.Next() {
-		rows.Scan(&creditCard.ID, &creditCard.CardNumber, &creditCard.ExpireMonthDay, &creditCard.Cvv, &creditCard.Amount, &creditCard.Currency)
+		err := rows.Scan(&creditCard.ID, &creditCard.CardNumber, &creditCard.ExpireMonthDay, &creditCard.Cvv, &creditCard.Amount, &creditCard.Currency)
+		if err != nil {
+			return nil, err
+		}
 		creditCards = append(creditCards, creditCard)
 	}
 	return creditCards, nil

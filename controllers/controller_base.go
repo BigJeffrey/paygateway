@@ -16,7 +16,10 @@ type Controller struct {
 func ReturnJSON(w http.ResponseWriter, responseModel interface{}, status int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(responseModel)
+	err := json.NewEncoder(w).Encode(responseModel)
+	if err != nil {
+		ReturnJSON(w, models.NewErrorResponse("unable to encode json"), http.StatusInternalServerError)
+	}
 }
 
 func ApiError(w http.ResponseWriter, message string, code int) {

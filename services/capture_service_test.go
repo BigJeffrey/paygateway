@@ -15,8 +15,10 @@ func TestCapture(t *testing.T) {
 
 	services := Services{}
 
-	services.Capture(&transaction, 50)
-
+	_, err := services.Capture(&transaction, 50)
+	if err != nil {
+		t.Errorf("couldnt capture")
+	}
 	actual := transaction.Amount
 	expected := float64(950)
 

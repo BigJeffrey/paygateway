@@ -15,8 +15,10 @@ func TestRefund(t *testing.T) {
 
 	services := Services{}
 
-	services.Refund(&transaction, 50)
-
+	_, err := services.Refund(&transaction, 50)
+	if err != nil {
+		t.Errorf("couldnt capture")
+	}
 	actual := transaction.Amount
 	expected := float64(1000)
 
